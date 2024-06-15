@@ -1,17 +1,18 @@
 import pathlib
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from django.contrib.admin.views.decorators import staff_member_required
-from django.conf import settings
-
 from django.http import HttpResponse
-from visits.models import PageVisist
+
+from visits.models import PageVisit
+
+this_dir = pathlib.Path(__file__).resolve().parent
+
+def home_view(request, *args, **kwargs):
+    return about_view(request, *args, **kwargs)
 
 
 def about_view(request, *args, **kwargs):
-    qs = PageVisist.objects.all()
-    print(qs)
-    page_qs = PageVisist.objects.filter(path=request.path)
+    qs = PageVisit.objects.all()
+    page_qs = PageVisit.objects.filter(path=request.path)
     try:
         percent = (page_qs.count() * 100.0) / qs.count()
     except:
@@ -24,5 +25,24 @@ def about_view(request, *args, **kwargs):
         "percent": percent,
         "total_visit_count": qs.count(),
     }
-    PageVisist.objects.create(path=request.path)
+    PageVisit.objects.create(path=request.path)
     return render(request, html_template, my_context)
+
+
+def my_old_home_page_view(request, *args, **kwargs):
+    my_title = "My Page"
+    my_context = {
+        "page_title": my_title
+    }
+    html_ = """
+    <!DOCTYPE html>
+<html>
+
+<body>
+    <h1>{page_title} anything?</h1>
+</body>
+</html>    
+""".format(**my_context) # page_title=my_title
+    # html_file_path = this_dir / "home.html"
+    # html_ = html_file_path.read_text()
+    return HttpResponse(html_)
