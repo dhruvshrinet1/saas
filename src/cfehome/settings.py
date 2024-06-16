@@ -25,6 +25,22 @@ SECRET_KEY = config("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DJANGO_DEBUG",cast=bool)
+DATABASE_URL = config("DATABASE_URL",default=None,cast=str)
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
+
+import dj_database_url
+
+if DATABASE_URL is not None:
+    DATABASES = {
+    "default": 
+    dj_database_url.config(default=DATABASE_URL,conn_max_age=30,conn_health_checks=True)
+}
 
 print(DEBUG,type(DEBUG))
 
@@ -85,12 +101,6 @@ WSGI_APPLICATION = "cfehome.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
 
 
 # Password validation
