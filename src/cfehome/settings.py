@@ -26,7 +26,7 @@ DJANGO_SECRET_KEY = config("DJANGO_SECRET_KEY",default="h%s55(%u-c50z&4eb$uitlwe
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DJANGO_DEBUG",cast=bool)
 DATABASE_URL = config("DATABASE_URL",default=None,cast=str)
-from secrets_manager import get_secret
+# from secrets_manager import get_secret
 
 # environment = config("ENVIRONMENT")
 # SECRET_KEY = get_secret(environment).get("SECRET_KEY")
