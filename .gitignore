@@ -1,0 +1,4 @@
+\local-cdn
+src\staticfiles\vendors
+
+cfehome\__pycache__\*
